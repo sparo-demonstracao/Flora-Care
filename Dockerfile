@@ -2,7 +2,11 @@
 FROM node:18-alpine AS build
 WORKDIR /app
 COPY package*.json ./
-RUN npm ci
+
+# Garante que todas as dependencias (incluindo devDependencies como Vite) sejam instaladas
+ENV NODE_ENV=development
+RUN npm install
+
 COPY . .
 RUN npm run build
 
