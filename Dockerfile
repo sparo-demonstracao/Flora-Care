@@ -8,7 +8,12 @@ ENV NODE_ENV=development
 RUN npm install
 
 COPY . .
-RUN npm run build
+
+# Corrige permissões de execução do binário do vite
+RUN chmod +x node_modules/.bin/vite
+
+# Tenta buildar usando npx para garantir resolução correta
+RUN npx vite build
 
 # Production stage
 FROM nginx:alpine
